@@ -2,16 +2,10 @@
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin:/opt/dell/srvadmin/sbin
 
-if [ -z "$1" ]; then
-    HOSTNAME=$(hostname -f)
-else
-	HOSTNAME=$1
-fi
-
 CONFIGDIR="/opt/backupator/etc"
-DBNAME="backupator"
 MY_CREDENTIALS="${CONFIGDIR}/backupator_mysql.cnf"
-MYSQL_COMMAND="mysql --defaults-extra-file=${MY_CREDENTIALS} ${DBNAME}"
+HOSTNAME=$(grep "^STORAGE_NODE_ID=" ${CONFIGDIR}/backupator.conf |awk -F'"' '{print $2}')
+MYSQL_COMMAND="mysql --defaults-extra-file=${MY_CREDENTIALS}"
 POOL=$(${MYSQL_COMMAND} -e "SELECT pool FROM storage_nodes WHERE hostname='${HOSTNAME}'")
 STORAGE_PATH=$(${MYSQL_COMMAND} -e "SELECT storage_path FROM storage_nodes WHERE hostname='${HOSTNAME}'")
 
