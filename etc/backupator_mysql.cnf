@@ -1,0 +1,13 @@
+# Credentials for the backupator database
+[client]
+database=''
+user=''
+password=''
+host=''
+port=''
+
+# Do not edit below
+
+skip-column-names
+silent
+connect-timeout=5

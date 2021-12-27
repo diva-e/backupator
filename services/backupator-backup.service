@@ -1,0 +1,14 @@
+[Unit]
+Description=Backupator Backup Agent
+Wants=basic.target
+After=basic.target network.target
+
+[Service]
+WorkingDirectory=/opt/backupator
+ExecStart=/opt/backupator/bin/backup_agent.sh
+KillMode=process
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
